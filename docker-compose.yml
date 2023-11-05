@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  ocrmypdf-rclone:
+    privileged: true
+    cap_add:
+      - SYS_ADMIN
+    devices:
+      - "/dev/fuse:/dev/fuse"
+    security_opt:
+      - "apparmor:unconfined"
+    build: .
+    volumes:
+      - ./rclone-config:/config
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/group:/etc/group:ro
+    restart: unless-stopped
+    container_name: ocrmypdf-rclone
